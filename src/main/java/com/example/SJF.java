@@ -15,7 +15,6 @@ public class SJF {
         while (completed.size() < processes.size()) {
             Process next = null;
             for (Process p : processes) {
-            
                 if (p.arrivalTime <= currentTime && !completed.contains(p)) {
                     if (next == null || 
                         (p.burstTime < next.burstTime) || 
@@ -28,14 +27,17 @@ public class SJF {
                 currentTime++;
                 continue;
             }
-            int completionTime = currentTime + next.burstTime;
+
+            int startTime = currentTime;  
+            int completionTime = currentTime + next.burstTime;  
+            next.executionIntervals.add(new int[]{startTime, completionTime}); 
+            
             next.turnaroundTime = completionTime - next.arrivalTime;
             next.waitingTime = next.turnaroundTime - next.burstTime;
             currentTime = completionTime;
             completed.add(next);
         }
         displayResults.print(completed);
+        GanttChartSJF.display(completed); 
     }
-
-  
 }

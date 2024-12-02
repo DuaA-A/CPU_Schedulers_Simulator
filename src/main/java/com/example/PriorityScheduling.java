@@ -11,12 +11,18 @@ public class PriorityScheduling {
         for (Process p : processes) {
             if (currT < p.arrivalTime) 
                 currT = p.arrivalTime;
-                
-            int CT = currT + p.burstTime;
-            p.turnaroundTime = CT - p.arrivalTime;
+        
+            int startTime = currT;
+            int endTime = startTime + p.burstTime;
+            
+            p.executionIntervals.add(new int[]{startTime, endTime}); 
+            p.turnaroundTime = endTime - p.arrivalTime;
             p.waitingTime = p.turnaroundTime - p.burstTime;
-            currT = CT;
+            currT = endTime;
         }
-        displayResults.print(processes);    
+        
+        displayResults.print(processes);  
+        GanttChartPriority.display(processes); 
+
     }
 }

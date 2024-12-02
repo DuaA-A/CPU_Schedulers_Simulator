@@ -40,8 +40,12 @@ public class Main {
                 case 3:
                     SRTF.run(new ArrayList<>(processes));
                     break;
+                case 4:
+                    // Youssef & AbdelRahman
+                    break;
                 case 5:
                     System.out.println("\nExiting. Goodbye!");
+                    sc.close(); 
                     return;
                 default:
                     System.out.println("Invalid choice! Try again.");

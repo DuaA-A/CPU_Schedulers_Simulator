@@ -9,8 +9,7 @@ public class displayResults {
         for (Process p : processes) {
             tWT += p.waitingTime;
             tTurnaroundT += p.turnaroundTime;
-            System.out.println(p.name + " -> Waiting Time: " + p.waitingTime
-                                + ", Turnaround Time: " + p.turnaroundTime);
+            System.out.println(p.name + " -> Waiting Time: " + p.waitingTime + ", Turnaround Time: " + p.turnaroundTime);
         }
         System.out.println("\nAvg waiting time: " + (double) tWT / processes.size());
         System.out.println("Avg turnaround time: " + (double) tTurnaroundT / processes.size());

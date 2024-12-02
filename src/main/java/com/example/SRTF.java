@@ -1,7 +1,5 @@
 package com.example;
-
 import java.util.List;
-
 public class SRTF {
     
     public static void run(List<Process> processes) {
@@ -11,7 +9,6 @@ public class SRTF {
 
         while (comp < processes.size()) {
             int shortestI = -1, minRemainT = Integer.MAX_VALUE;
-
             for (int i = 0; i < processes.size(); i++) {
                 if (processes.get(i).arrivalTime <= currT && !isCompleted[i] && remainingTime[i] < minRemainT) {
                     shortestI = i;
@@ -33,7 +30,6 @@ public class SRTF {
                 p.waitingTime = p.turnaroundTime - p.burstTime;
             }
         }
-        
         displayResults.print(processes);
         GanttChart.display(processes); 
     }

@@ -6,7 +6,6 @@ import java.util.List;
 public class SJF {
 
     public static void run(List<Process> processes) {
-       
         processes.sort((p1, p2) -> Integer.compare(p1.arrivalTime, p2.arrivalTime));
 
         int currentTime = 0;  
@@ -15,7 +14,6 @@ public class SJF {
 
         while (completed.size() < processes.size()) {
             Process next = null;
-
             for (Process p : processes) {
             
                 if (p.arrivalTime <= currentTime && !completed.contains(p)) {
@@ -26,20 +24,16 @@ public class SJF {
                     }
                 }
             }
-
             if (next == null) {
                 currentTime++;
                 continue;
             }
-
             int completionTime = currentTime + next.burstTime;
             next.turnaroundTime = completionTime - next.arrivalTime;
             next.waitingTime = next.turnaroundTime - next.burstTime;
             currentTime = completionTime;
             completed.add(next);
         }
-
-       
         displayResults.print(completed);
     }
 

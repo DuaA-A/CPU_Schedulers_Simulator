@@ -11,7 +11,7 @@ public class PriorityScheduling {
         for (Process p : processes) {
             if (currT < p.arrivalTime) 
                 currT = p.arrivalTime;
-            
+                
             int CT = currT + p.burstTime;
             p.turnaroundTime = CT - p.arrivalTime;
             p.waitingTime = p.turnaroundTime - p.burstTime;

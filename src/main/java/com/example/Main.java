@@ -9,7 +9,6 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter the number of processes: ");
         int n = sc.nextInt();
-
         List<Process> processes = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             System.out.print("Enter process name, arrival time, burst time, and priority: ");
@@ -19,7 +18,6 @@ public class Main {
             int priority = sc.nextInt();
             processes.add(new Process(name, arrivalTime, burstTime, priority));
         }
-
         while (true) {
             System.out.println("\nSelect a Scheduling Algorithm:");
             System.out.println("1. Non-Preemptive Priority Scheduling");
@@ -28,7 +26,6 @@ public class Main {
             System.out.println("4. FCAI Scheduling");
             System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
-
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:

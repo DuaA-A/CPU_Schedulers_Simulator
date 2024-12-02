@@ -31,6 +31,6 @@ public class SRTF {
             }
         }
         displayResults.print(processes);
-        GanttChart.display(processes); 
+        GanttChartSRTF.display(processes); 
     }
 }

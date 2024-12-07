@@ -1,11 +1,17 @@
 package com.example;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
 
 public class GanttChartSJF extends JPanel {
     private final List<Process> processes;
@@ -48,6 +54,42 @@ public class GanttChartSJF extends JPanel {
         GanttChartSJF chart = new GanttChartSJF(processes);
         frame.add(chart);
         frame.setSize(1000, 400);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+
+        displayReport(processes); 
+    }
+
+    public static void displayReport(List<Process> processes) {
+        JFrame reportFrame = new JFrame("SJF Scheduling Report");
+
+        String[] columns = {"Process", "Color", "Waiting Time", "Turnaround Time"};
+        Object[][] data = new Object[processes.size()][4];
+
+        int totalWT = 0, totalTAT = 0;
+        for (int i = 0; i < processes.size(); i++) {
+            Process p = processes.get(i);
+            totalWT += p.waitingTime;
+            totalTAT += p.turnaroundTime;
+
+            data[i][0] = p.name;
+            data[i][1] = "RGB(" + p.color.getRed() + ", " + p.color.getGreen() + ", " + p.color.getBlue() + ")";
+            data[i][2] = p.waitingTime;
+            data[i][3] = p.turnaroundTime;
+        }
+
+        JTable table = new JTable(new DefaultTableModel(data, columns));
+        JScrollPane scrollPane = new JScrollPane(table);
+        reportFrame.add(scrollPane, BorderLayout.CENTER);
+
+        double avgWT = (double) totalWT / processes.size();
+        double avgTAT = (double) totalTAT / processes.size();
+        JLabel statsLabel = new JLabel(String.format("Average Waiting Time: %.2f | Average Turnaround Time: %.2f", avgWT, avgTAT));
+        statsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        reportFrame.add(statsLabel, BorderLayout.SOUTH);
+
+        reportFrame.setSize(600, 400);
+        reportFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        reportFrame.setVisible(true);
     }
 }

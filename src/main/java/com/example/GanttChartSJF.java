@@ -54,7 +54,6 @@ public class GanttChartSJF extends JPanel {
         GanttChartSJF chart = new GanttChartSJF(processes);
         frame.add(chart);
         frame.setSize(1000, 400);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
         displayReport(processes); 
@@ -89,7 +88,6 @@ public class GanttChartSJF extends JPanel {
         reportFrame.add(statsLabel, BorderLayout.SOUTH);
 
         reportFrame.setSize(600, 400);
-        reportFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         reportFrame.setVisible(true);
     }
 }

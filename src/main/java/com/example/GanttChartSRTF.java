@@ -1,5 +1,4 @@
 package com.example;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.List;
@@ -17,7 +16,7 @@ public class GanttChartSRTF extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        int x = 50, y = 50, h = 30, w = 20, gap = 2; 
+        int x = 50, y = 50, h = 30, w = 20; 
         int currentTime = 0; 
         
         for (Process process : processes) {
@@ -26,8 +25,8 @@ public class GanttChartSRTF extends JPanel {
                 int pEnd = interval[1];
                 int pWidth = (pEnd - pStart) * w;
                 g.setColor(process.color);
-                g.fillRect(x + pStart * w, y, pWidth - gap, h);
-                g.drawRect(x + pStart * w, y, pWidth - gap, h);
+                g.fillRect(x + pStart * w, y, pWidth , h);
+                g.drawRect(x + pStart * w, y, pWidth , h);
                 g.setColor(Color.BLACK);
                 g.drawString(process.name, x + pStart * w + 4, y + h / 2);
                 currentTime = pEnd;

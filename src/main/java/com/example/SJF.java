@@ -10,7 +10,7 @@ public class SJF {
         int currentTime = 0;  
         List<Process> completed = new ArrayList<>();  
         while (completed.size() < processes.size()) {
-            int AGING_THRESHOLD = calculateAgingThreshold(processes, currentTime);; 
+            int AGING_THRESHOLD = 15; 
             Process next = null;
             for (Process p : processes) {
                 if (p.arrivalTime <= currentTime && !completed.contains(p)) {
@@ -36,20 +36,5 @@ public class SJF {
         GanttChartSJF.display(completed); 
     }
 
-    private static int calculateAgingThreshold(List<Process> processes, int currentTime) {
-        int maxWaitTime = 0;
-    
-        for (Process p : processes) {
-            if (p.arrivalTime <= currentTime) {
-                int waitTime = currentTime - p.arrivalTime;
-                maxWaitTime = Math.max(maxWaitTime, waitTime);
-            }
-        }
-        if (maxWaitTime > 15) 
-            return 5; 
-        else if (maxWaitTime > 10) 
-            return 10; 
-        else 
-            return 15;
-    }
+ 
 }

@@ -9,9 +9,10 @@ public class SRTF {
         boolean[] Completed = new boolean[processes.size()];
         int[] WT = new int[processes.size()]; 
         Process lastP = null;
-        int cS = CS; 
+        int cS = CS;
+        int agingT = 10;
+        
         while (comp < processes.size()) {
-            int agingT = calcAgingT(processes, currT);
             int shortestI = -1, minRemainT = Integer.MAX_VALUE;
             for (int i = 0; i < processes.size(); i++) {
                 if (!Completed[i] && processes.get(i).arrivalTime <= currT) {
@@ -20,8 +21,12 @@ public class SRTF {
             }
             for (int i = 0; i < processes.size(); i++) {
                 if (processes.get(i).arrivalTime <= currT && !Completed[i]) {
-                    if ((remainingTime[i] < minRemainT) || 
-                        ((currT - processes.get(i).arrivalTime) >= agingT && (shortestI != -1 && (currT - processes.get(shortestI).arrivalTime) < agingT))) {
+                    if (WT[i] >= agingT) {
+                        if (shortestI == -1 || WT[i] > WT[shortestI] || 
+                            (WT[i] == WT[shortestI] && remainingTime[i] < remainingTime[shortestI])) {
+                            shortestI = i;
+                        }
+                    } else if (remainingTime[i] < minRemainT) {
                         shortestI = i;
                         minRemainT = remainingTime[i];
                     }
@@ -50,19 +55,19 @@ public class SRTF {
         GanttChartSRTF.display(processes);
     }
 
-    private static int calcAgingT(List<Process> processes, int currentTime) {
-        int maxWT = 0;
-        for (Process p : processes) {
-            if (p.arrivalTime <= currentTime) {
-                int WT = currentTime - p.arrivalTime;
-                maxWT = Math.max(maxWT, WT);
-            }
-        }
-        if (maxWT > 15) 
-            return 5; 
-        else if (maxWT > 10) 
-            return 10; 
-        else 
-            return 15;
-    }
+    // private static int calcAgingT(List<Process> processes, int currentTime) {
+    //     int maxWT = 0;
+    //     for (Process p : processes) {
+    //         if (p.arrivalTime <= currentTime) {
+    //             int WT = currentTime - p.arrivalTime;
+    //             maxWT = Math.max(maxWT, WT);
+    //         }
+    //     }
+    //     if (maxWT > 15) 
+    //         return 5; 
+    //     else if (maxWT > 10) 
+    //         return 10; 
+    //     else 
+    //         return 15;
+    // }
 }

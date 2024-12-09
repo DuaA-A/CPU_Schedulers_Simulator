@@ -10,8 +10,8 @@ public class SRTF {
         int[] WT = new int[processes.size()]; 
         Process lastP = null;
         int cS = CS;
-        int agingT = 10;
-        
+        int agingT = 5;
+
         while (comp < processes.size()) {
             int shortestI = -1, minRemainT = Integer.MAX_VALUE;
             for (int i = 0; i < processes.size(); i++) {
@@ -37,9 +37,23 @@ public class SRTF {
                 continue;
             }
             Process currP = processes.get(shortestI);
-            if (lastP != null && lastP != currP) 
-                currT += cS; 
-            
+            if (lastP != null && lastP != currP) {
+                
+                shortestI = -1;
+                minRemainT = Integer.MAX_VALUE;
+                for (int i = 0; i < processes.size(); i++) {
+                    if (processes.get(i).arrivalTime <= currT && !Completed[i] && remainingTime[i] < minRemainT) {
+                        shortestI = i;
+                        minRemainT = remainingTime[i];
+                    }
+                }
+                if (shortestI != -1 && processes.get(shortestI) != lastP) {
+                    currP = processes.get(shortestI);
+                    currT += cS;
+                }else
+                    currP = processes.get(shortestI);
+                
+            }
             currP.addExecutionInterval(currT, currT + 1);
             remainingTime[shortestI]--;
             currT++;
@@ -54,20 +68,4 @@ public class SRTF {
         displayResults.print(processes);
         GanttChartSRTF.display(processes);
     }
-
-    // private static int calcAgingT(List<Process> processes, int currentTime) {
-    //     int maxWT = 0;
-    //     for (Process p : processes) {
-    //         if (p.arrivalTime <= currentTime) {
-    //             int WT = currentTime - p.arrivalTime;
-    //             maxWT = Math.max(maxWT, WT);
-    //         }
-    //     }
-    //     if (maxWT > 15) 
-    //         return 5; 
-    //     else if (maxWT > 10) 
-    //         return 10; 
-    //     else 
-    //         return 15;
-    // }
 }

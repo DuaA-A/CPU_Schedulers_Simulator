@@ -13,7 +13,7 @@ public class displayResults {
         }
         double avgWT = (double) tWT / processes.size();
         double avgTurnaroundT = (double) tTurnaroundT / processes.size();
-        System.out.println("\nAvg waiting time: " + Math.ceil(avgWT));
-        System.out.println("Avg turnaround time: " + Math.ceil(avgTurnaroundT));
+        System.out.println("\nAvg waiting time: " + avgWT);
+        System.out.println("Avg turnaround time: " + avgTurnaroundT);
     }
 }

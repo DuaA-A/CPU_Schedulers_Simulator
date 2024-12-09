@@ -1,0 +1,10 @@
+P1,red,0,10,4,4
+P2,pink,0,6,9,3
+P3,purple,0,5,3,5
+P4,orange,4,2,10,2
+
+FCAI
+P1,red,0,17,4,4
+P2,green,3,6,9,3
+P3,purple,4,10,3,5
+P4,orange,29,4,10,2

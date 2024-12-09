@@ -1,5 +1,7 @@
 package com.example;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -26,19 +28,19 @@ public class Main {
 
         switch (choice) {
             case 1:
-                takeInput(sc, n, processes);
+                takeInput(n,processes);
                 PriorityScheduling.run(new ArrayList<>(processes), CS);
                 break;
             case 2:
-                takeInput(sc, n, processes);
+                takeInput(n, processes);
                 SJF.run(new ArrayList<>(processes));
                 break;
             case 3:
-                takeInput(sc, n, processes);
+                takeInput(n, processes);
                 SRTF.run(new ArrayList<>(processes), CS);
                 break;
             case 4:
-                takeInputFCAI(sc, n, processes);
+                takeInputFCAI(n, processes);
                 FCAI.run(new ArrayList<>(processes));
                 break;
             case 5:
@@ -52,37 +54,40 @@ public class Main {
         sc.close();
     }
 
-    public static void takeInput(Scanner sc, int n, List<Process> processes) {
-        for (int i = 0; i < n; i++) {
-            System.out.println("\nEnter details for Process " + (i + 1) + ":");
-            System.out.print("Process Name: ");
-            String name = sc.next();
-            System.out.print("Process Color (Choose from red, blue, green, yellow, cyan, magenta, orange, pink,\n gray, black, purple, brown, light_gray, dark_gray): ");
-            String color = sc.next();
-            System.out.print("Arrival Time: ");
-            int arrivalTime = sc.nextInt();
-            System.out.print("Burst Time: ");
-            int burstTime = sc.nextInt();
-            System.out.print("Priority Number: ");
-            int priority = sc.nextInt();
-            processes.add(new Process(name, color, arrivalTime, burstTime, priority));
+    public static void takeInput(int n, List<Process> processes) {
+            String filePath = "/home/youssef/Desktop/CPU_Schedulers_Simulator/src/main/java/com/example/input.txt";
+            try (Scanner fileScanner = new Scanner(new File(filePath))) {
+                while (fileScanner.hasNextLine() && processes.size() < n) {
+                    String[] data = fileScanner.nextLine().split(",");
+                    String name = data[0];
+                    String color = data[1];
+                    int arrivalTime = Integer.parseInt(data[2]);
+                    int burstTime = Integer.parseInt(data[3]);
+                    int priority = Integer.parseInt(data[4]);
+                    processes.add(new Process(name, color, arrivalTime, burstTime, priority));
+                }
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found. Please check the file path.");
+            }
+
+    }
+
+    public static void takeInputFCAI(int n, List<Process> processes) {
+        String filePath = "/home/youssef/Desktop/CPU_Schedulers_Simulator/src/main/java/com/example/input.txt";
+        try (Scanner fileScanner = new Scanner(new File(filePath))) {
+            while (fileScanner.hasNextLine() && processes.size() < n) {
+                String[] data = fileScanner.nextLine().split(",");
+                String name = data[0];
+                String color = data[1];
+                int arrivalTime = Integer.parseInt(data[2]);
+                int burstTime = Integer.parseInt(data[3]);
+                int priority = Integer.parseInt(data[4]);
+                int QT = Integer.parseInt(data[5]);
+                processes.add(new Process(name, color, arrivalTime, burstTime, priority,QT));
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found. Please check the file path.");
         }
-    }public static void takeInputFCAI(Scanner sc, int n, List<Process> processes) {
-        for (int i = 0; i < n; i++) {
-            System.out.println("\nEnter details for Process " + (i + 1) + ":");
-            System.out.print("Process Name: ");
-            String name = sc.next();
-            System.out.print("Process Color (Choose from red, blue, green, yellow, cyan, magenta, orange, pink,\n gray, black, purple, brown, light_gray, dark_gray): ");
-            String color = sc.next();
-            System.out.print("Arrival Time: ");
-            int arrivalTime = sc.nextInt();
-            System.out.print("Burst Time: ");
-            int burstTime = sc.nextInt();
-            System.out.print("Priority Number: ");
-            int priority = sc.nextInt();
-            System.out.print("quantum: ");
-            int QT = sc.nextInt();
-            processes.add(new Process(name, color, arrivalTime, burstTime, priority,QT));
-        }
+
     }
 }

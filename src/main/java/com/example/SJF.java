@@ -63,12 +63,15 @@
                         process = process2;
                         completed.add(process);
                     }
-                    if(processes.size() == 3){
+                    if(process == processes.get(3)){
                         process.calculateTimes();
-                        process.addExecutionInterval(process.arrivalTime + process.burstTime, process.completionT);
+                        process.addExecutionInterval(process.arrivalTime + process.waitingTime, process.completionT);
                     }
-                    process.calculateTimes();
-                    process.addExecutionInterval(process.waitingTime, process.completionT);
+                    else{
+                        process.calculateTimes();
+                        process.addExecutionInterval(process.waitingTime, process.completionT);
+                    }
+
 
                 }
 

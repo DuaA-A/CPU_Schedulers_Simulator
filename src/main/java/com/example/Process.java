@@ -12,6 +12,7 @@ class Process {
     int waitingTime;
     int turnaroundTime;
     int remainingTime;
+    int lastExecutionTime;
     Color color;
     List<int[]> executionIntervals = new ArrayList<>();
 

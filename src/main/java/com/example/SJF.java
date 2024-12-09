@@ -19,27 +19,20 @@
                     (p1, p2) -> (p1.priority == p2.priority) ? p1.burstTime - p2.burstTime : p2.priority - p1.priority
             );
 
-            // Aging Mechanism
-            Process[] priorityToZero = pq.toArray(new Process[0]);
-            pq.clear();
-            for (Process p : priorityToZero) {
-                p.priority = 0;
-                pq.add(p);
-            }
+
+            pq.forEach(process -> process.priority = 0);
 
             int AGING_THRESHOLD = 5;
             int priorityTime = AGING_THRESHOLD;
 
             while (!pq.isEmpty()) {
                 Process process = pq.poll();
-                if (completed.isEmpty())
-                    process.completionT = process.arrivalTime + process.burstTime;
-                else
-                    process.completionT = completed.get(completed.size() - 1).completionT + process.burstTime;
+
+                process.completionT = completed.isEmpty() ? (process.arrivalTime + process.burstTime) :( completed.get(completed.size() - 1).completionT + process.burstTime);
                 completed.add(process);
 
-                int time = process.arrivalTime + process.burstTime;
-                while (!pq.isEmpty() && pq.peek().arrivalTime <= time) {
+
+                while (!pq.isEmpty() && pq.peek().arrivalTime <= process.arrivalTime + process.burstTime) {
                     queue.add(pq.poll());
                 }
 
@@ -71,8 +64,6 @@
                         process.calculateTimes();
                         process.addExecutionInterval(process.waitingTime, process.completionT);
                     }
-
-
                 }
 
                 for (Process p : completed) {

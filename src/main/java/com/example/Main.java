@@ -55,8 +55,7 @@ public class Main {
     }
 
     public static void takeInput(int n, List<Process> processes) {
-            String filePath = "/home/youssef/Desktop/CPU_Schedulers_Simulator/src/main/java/com/example/input.txt";
-            try (Scanner fileScanner = new Scanner(new File(filePath))) {
+        String filePath = "/Users/dodoa/OneDrive/Desktop/OS/CPU_Schedulers_Simulator/src/main/java/com/example/input.txt";            try (Scanner fileScanner = new Scanner(new File(filePath))) {
                 while (fileScanner.hasNextLine() && processes.size() < n) {
                     String[] data = fileScanner.nextLine().split(",");
                     String name = data[0];

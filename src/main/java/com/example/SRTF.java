@@ -38,22 +38,30 @@ public class SRTF {
             }
             Process currP = processes.get(shortestI);
             if (lastP != null && lastP != currP) {
-                
                 shortestI = -1;
                 minRemainT = Integer.MAX_VALUE;
                 for (int i = 0; i < processes.size(); i++) {
-                    if (processes.get(i).arrivalTime <= currT && !Completed[i] && remainingTime[i] < minRemainT) {
-                        shortestI = i;
-                        minRemainT = remainingTime[i];
+                    if (!Completed[i] && processes.get(i).arrivalTime <= currT) {
+                        if (WT[i] >= agingT) {
+                            if (shortestI == -1 || WT[i] > WT[shortestI] || 
+                                (WT[i] == WT[shortestI] && remainingTime[i] < remainingTime[shortestI])) {
+                                shortestI = i;
+                            }
+                        } else if (remainingTime[i] < minRemainT) {
+                            shortestI = i;
+                            minRemainT = remainingTime[i];
+                        }
                     }
                 }
-                if (shortestI != -1 && processes.get(shortestI) != lastP) {
-                    currP = processes.get(shortestI);
-                    currT += cS;
-                }else
-                    currP = processes.get(shortestI);
-                
+                if (shortestI != -1) {
+                    Process nextP = processes.get(shortestI);
+                    if (nextP != lastP) 
+                        currT += cS; 
+                    currP = nextP; 
+                }
             }
+
+            
             currP.addExecutionInterval(currT, currT + 1);
             remainingTime[shortestI]--;
             currT++;

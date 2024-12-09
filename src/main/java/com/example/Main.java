@@ -73,7 +73,7 @@ public class Main {
     }
 
     public static void takeInputFCAI(int n, List<Process> processes) {
-        String filePath = "/home/youssef/Desktop/CPU_Schedulers_Simulator/src/main/java/com/example/input.txt";
+        String filePath = "/home/youssef/Desktop/CPU_Schedulers_Simulator/src/main/java/com/example/inputFCAI.txt";
         try (Scanner fileScanner = new Scanner(new File(filePath))) {
             while (fileScanner.hasNextLine() && processes.size() < n) {
                 String[] data = fileScanner.nextLine().split(",");
